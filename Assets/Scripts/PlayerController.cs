@@ -33,9 +33,12 @@ public class PlayerController : MonoBehaviour
             bulletSpawn.rotation
         );
 
+        AudioSource shoot = GetComponent<AudioSource>();
+        shoot.Play();
+
+        //bullet.GetComponent<Rigidbody>().linearVelocity() = bullet.transform.forward * 6f;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
         rb.linearVelocity = bullet.transform.forward * 6f;
-
         Destroy(bullet, 3f);
     }
 }
