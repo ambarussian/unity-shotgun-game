@@ -5,7 +5,7 @@ public class TrapController : MonoBehaviour
 
     public GameObject cubeTrap;
 
-    void onTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
