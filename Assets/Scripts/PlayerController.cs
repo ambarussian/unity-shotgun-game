@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public CameraController cameraController;
     public GameObject pauseMenu;
     private bool isPaused = false;
+    public AudioClip deathSound;
 
     void Start()
     {
@@ -80,6 +81,8 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
+        AudioSource.PlayClipAtPoint(deathSound, transform.position);
+
         scoreboard = 0;
         txtScore.text = "Scoreboard: 0";
         

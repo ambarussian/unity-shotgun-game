@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class KillerTrap : MonoBehaviour
+public class CubeTrap : MonoBehaviour
 {
     void OnCollisionEnter(Collision collision)
     {

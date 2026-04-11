@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8588734072699921054}
   - component: {fileID: 2133085985674103999}
   m_Layer: 0
-  m_Name: Trap
+  m_Name: FloorTrap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
