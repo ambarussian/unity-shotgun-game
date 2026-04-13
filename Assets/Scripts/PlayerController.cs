@@ -14,10 +14,11 @@ public class PlayerController : MonoBehaviour
     public CameraController cameraController;
     public GameObject pauseMenu;
     private bool isPaused = false;
-    public AudioClip deathSound;
+    private AudioSource audioSource;
 
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         txtVictory.gameObject.SetActive(false);
         btnAgain.SetActive(false);
     }
@@ -81,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        AudioSource.PlayClipAtPoint(deathSound, transform.position);
+        audioSource.Play();
 
         scoreboard = 0;
         txtScore.text = "Scoreboard: 0";
@@ -100,14 +101,14 @@ public class PlayerController : MonoBehaviour
     {
         if (isPaused)
         {
-        // RESUME
+        //RESUME
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         isPaused = false;
         }
         else
         {
-        // PAUSE
+        //PAUSE
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         isPaused = true;
@@ -115,7 +116,7 @@ public class PlayerController : MonoBehaviour
     }
     public void BackToMenu()
     {
-    Time.timeScale = 1f;
+    Time.timeScale = 1.0f;
     SceneManager.LoadScene("MainMenu");
     }
 }

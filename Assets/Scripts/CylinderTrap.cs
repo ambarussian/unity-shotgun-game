@@ -2,48 +2,58 @@ using UnityEngine;
 
 public class CylinderTrap : MonoBehaviour
 {
-    private Transform player;
+    private Rigidbody rb;
+    private Vector3 moveDirection;
     private bool activated = false;
 
-    public float speed = 5f;
+    public float speed = 8f;
 
     void Start()
     {
-        GameObject p = GameObject.FindGameObjectWithTag("Player");
-        if (p != null)
-        {
-            player = p.transform;
-        }
+        rb = GetComponent<Rigidbody>();
+
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Bullet"))
+        //ativar ao ser atingido pela bala
+        if (collision.gameObject.CompareTag("Bullet") && !activated)
         {
-            activated = true;
-        }
-    }
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
 
-    void Update()
-    {
-        if (activated && player != null)
-        {
-            Vector3 direction = (player.position - transform.position).normalized;
-
-            transform.position += direction * speed * Time.deltaTime;
-        }
-    }
-
-    void OnCollisionEnter2(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-
-            if (player != null)
+            if (playerObj != null)
             {
-                player.Die();
+                //calcula direção UMA VEZ
+                moveDirection = (playerObj.transform.position - transform.position).normalized;
+                activated = true;
+
+                Invoke("StopMoving", 3.0f);
             }
         }
+
+        //matar player
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            PlayerController p = collision.gameObject.GetComponent<PlayerController>();
+
+            if (p != null)
+            {
+                p.Die();
+            }
+        }
+    }
+
+    void FixedUpdate()
+    {
+        if (activated)
+        {
+            rb.linearVelocity = moveDirection * speed;
+        }
+    }
+
+    void StopMoving()
+    {
+        rb.linearVelocity = Vector3.zero;
+        activated = false;
     }
 }
