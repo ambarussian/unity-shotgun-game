@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 
     public Text txtScore;
     public Text txtVictory;
+    public Text txtPause;
     public GameObject btnAgain;
     private int scoreboard = 0;
     public CameraController cameraController;
@@ -24,8 +25,9 @@ public class PlayerController : MonoBehaviour
         shoot = sources[0];
         death = sources[1];
 
+        txtPause.gameObject.SetActive(false);
         txtVictory.gameObject.SetActive(false);
-        btnAgain.SetActive(false);
+        btnAgain.SetActive(false);   
     }
 
     void Update()
@@ -86,14 +88,14 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-       if (death != null && death.clip != null)
+        if (death != null && death.clip != null)
         {
-        death.Play();
+            death.Play();
         }
-        
+
         scoreboard = 0;
         txtScore.text = "Scoreboard: 0";
-        
+
         gameObject.SetActive(false);
 
         if (cameraController != null)
@@ -108,22 +110,26 @@ public class PlayerController : MonoBehaviour
     {
         if (isPaused)
         {
-        //RESUME
-        pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
-        isPaused = false;
+            //RESUME
+            pauseMenu.SetActive(false);
+            txtPause.gameObject.SetActive(false);
+
+            Time.timeScale = 1f;
+            isPaused = false;
         }
         else
         {
-        //PAUSE
-        pauseMenu.SetActive(true);
-        Time.timeScale = 0f;
-        isPaused = true;
+            //PAUSE
+            pauseMenu.SetActive(true);
+            txtPause.gameObject.SetActive(true);
+
+            Time.timeScale = 0f;
+            isPaused = true;
         }
     }
     public void BackToMenu()
     {
-    Time.timeScale = 1.0f;
-    SceneManager.LoadScene("MainMenu");
+        Time.timeScale = 1.0f;
+        SceneManager.LoadScene("MainMenu");
     }
 }
