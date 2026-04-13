@@ -14,11 +14,16 @@ public class PlayerController : MonoBehaviour
     public CameraController cameraController;
     public GameObject pauseMenu;
     private bool isPaused = false;
-    private AudioSource audioSource;
+    public AudioSource shoot;
+    public AudioSource death;
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        AudioSource[] sources = GetComponents<AudioSource>();
+
+        shoot = sources[0];
+        death = sources[1];
+
         txtVictory.gameObject.SetActive(false);
         btnAgain.SetActive(false);
     }
@@ -46,7 +51,6 @@ public class PlayerController : MonoBehaviour
             bulletSpawn.rotation
         );
 
-        AudioSource shoot = GetComponent<AudioSource>();
         if (shoot != null) shoot.Play();
 
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
@@ -82,8 +86,11 @@ public class PlayerController : MonoBehaviour
 
     public void Die()
     {
-        audioSource.Play();
-
+       if (death != null && death.clip != null)
+        {
+        death.Play();
+        }
+        
         scoreboard = 0;
         txtScore.text = "Scoreboard: 0";
         
